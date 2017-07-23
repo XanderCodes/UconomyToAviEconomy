@@ -20,12 +20,6 @@ namespace fr34kyn01535.Uconomy
 
         public void LoadDefaults()
         {
-            DatabaseAddress = "localhost";
-            DatabaseUsername = "unturned";
-            DatabasePassword = "password";
-            DatabaseName = "unturned";
-            DatabaseTableName = "uconomy";
-            DatabasePort = 3306;
             InitialBalance = 30;
             MoneyName = "Credits";
         }
