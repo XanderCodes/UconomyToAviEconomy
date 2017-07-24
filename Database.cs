@@ -29,8 +29,16 @@ namespace fr34kyn01535.Uconomy
         /// <returns>the new balance</returns>
         public decimal IncreaseBalance(string steamId, decimal increaseBy)
         {
-            Bank.PerformPayout(steamId, increaseBy, false);
-            Uconomy.Instance.BalanceUpdated(steamId, increaseBy);
+            if (increaseBy > 0)
+            {
+                Bank.PerformPayout(steamId, increaseBy, false);
+            }
+            if (increaseBy < 0)
+            {
+                Bank.PerformPaymentOnBehalfOfPayer(steamId, Bank.BANK_PLAYER_NAME_AND_ID, -increaseBy);
+            }
+            if(increaseBy != 0)
+                Uconomy.Instance.BalanceUpdated(steamId, increaseBy);
             return GetBalance(steamId);
         }
     }
