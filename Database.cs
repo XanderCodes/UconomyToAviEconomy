@@ -1,5 +1,6 @@
 ﻿using com.aviadmini.rocketmod.AviEconomy;
 
+// ReSharper disable InconsistentNaming
 namespace fr34kyn01535.Uconomy
 {
     public class DatabaseManager
@@ -12,26 +13,26 @@ namespace fr34kyn01535.Uconomy
         /// <summary>
         /// returns the current balance of an account
         /// </summary>
-        /// <param name="steamId"></param>
+        /// <param name="playerId">RocketPlayer ID of the account owner</param>
         /// <returns></returns>
-        public decimal GetBalance(string id)
+        public decimal GetBalance(string playerId)
         {
-            var balance = Bank.GetBalance(id);
-            Uconomy.Instance.OnBalanceChecked(id, balance);
+            decimal balance = Bank.GetBalance(playerId);
+            Uconomy.Instance.OnBalanceChecked(playerId, balance);
             return balance;
         }
 
         /// <summary>
         /// Increasing balance to increaseBy (can be negative)
         /// </summary>
-        /// <param name="steamId">steamid of the accountowner</param>
+        /// <param name="playerId">RocketPlayer ID of the account owner</param>
         /// <param name="increaseBy">amount to change</param>
         /// <returns>the new balance</returns>
-        public decimal IncreaseBalance(string steamId, decimal increaseBy)
+        public decimal IncreaseBalance(string playerId, decimal increaseBy)
         {
-            Bank.PerformPayout(steamId, increaseBy, false);
-            Uconomy.Instance.BalanceUpdated(steamId, increaseBy);
-            return GetBalance(steamId);
+            Bank.PerformPayout(playerId, increaseBy, false);
+            Uconomy.Instance.BalanceUpdated(playerId, increaseBy);
+            return GetBalance(playerId);
         }
     }
 }

@@ -4,6 +4,7 @@ using Rocket.Unturned.Player;
 using Steamworks;
 using System;
 
+// ReSharper disable InconsistentNaming
 namespace fr34kyn01535.Uconomy
 {
     public class Uconomy : RocketPlugin<UconomyConfiguration>
@@ -29,7 +30,7 @@ namespace fr34kyn01535.Uconomy
         public delegate void PlayerBalanceCheck(UnturnedPlayer player, decimal balance);
         public event PlayerBalanceCheck OnBalanceCheck;
         public delegate void PlayerPay(UnturnedPlayer sender, string receiver, decimal amt);
-        public event PlayerPay OnPlayerPay;
+        public event PlayerPay OnPlayerPay; // TODO intercept command from AviEconomy
 
         public override TranslationList DefaultTranslations => new TranslationList(){
             {"command_balance_show","Your current balance is: {0} {1}"},
@@ -45,16 +46,14 @@ namespace fr34kyn01535.Uconomy
 
         internal void BalanceUpdated(string SteamID, decimal amt)
         {
-            if (OnBalanceUpdate == null)
-                return;
+            if (OnBalanceUpdate == null) { return; }
             UnturnedPlayer player = UnturnedPlayer.FromCSteamID(new CSteamID(Convert.ToUInt64(SteamID)));
             OnBalanceUpdate(player, amt);
         }
 
         internal void OnBalanceChecked(string SteamID, decimal balance)
         {
-            if (OnBalanceCheck == null)
-                return;
+            if (OnBalanceCheck == null) { return; }
             UnturnedPlayer player = UnturnedPlayer.FromCSteamID(new CSteamID(Convert.ToUInt64(SteamID)));
             OnBalanceCheck(player, balance);
         }
