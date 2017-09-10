@@ -30,16 +30,12 @@ namespace fr34kyn01535.Uconomy
         /// <returns>the new balance</returns>
         public decimal IncreaseBalance(string playerId, decimal increaseBy)
         {
-            if (increaseBy > 0)
-            {
-                Bank.PerformPayout(playerId, increaseBy, false);
-            }
-            if (increaseBy < 0)
-            {
-                Bank.PerformPaymentOnBehalfOfPayer(playerId, Bank.BANK_PLAYER_NAME_AND_ID, -increaseBy);
-            }
             if(increaseBy != 0) 
             {
+                Bank.PerformOperation(playerId, (BankAccount playerAcc, out Transaction trans) => {
+                    playerAcc.Balance += increaseBy;
+                    trans = null;
+                });
                 Uconomy.Instance.BalanceUpdated(playerId, increaseBy);
             }
             return GetBalance(playerId);
