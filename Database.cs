@@ -1,4 +1,6 @@
-﻿using com.aviadmini.rocketmod.AviEconomy;
+﻿using System;
+
+using com.aviadmini.rocketmod.AviEconomy;
 
 // ReSharper disable InconsistentNaming
 namespace fr34kyn01535.Uconomy
@@ -28,16 +30,19 @@ namespace fr34kyn01535.Uconomy
         /// <param name="playerId">Rocket player id of account owner</param>
         /// <param name="increaseBy">amount to change</param>
         /// <returns>the new balance</returns>
-        public decimal IncreaseBalance(string playerId, decimal increaseBy)
-        {
+        public decimal IncreaseBalance(string playerId, decimal increaseBy) {
+
             if(increaseBy != 0) 
             {
-                Bank.PerformOperation(playerId, (BankAccount playerAcc, out Transaction trans) => {
+                decimal result = Bank.PerformOperation(playerId, (BankAccount playerAcc, out Transaction trans) => {
                     playerAcc.Balance += increaseBy;
                     trans = null;
+                    return new Tuple<bool, decimal>(true, playerAcc.Balance);
                 });
                 Uconomy.Instance.BalanceUpdated(playerId, increaseBy);
+                return result;
             }
+
             return GetBalance(playerId);
         }
     }
