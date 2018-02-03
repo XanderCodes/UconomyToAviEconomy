@@ -1,7 +1,10 @@
-﻿using Rocket.API;
+﻿using System;
+using System.Xml.Serialization;
+using Rocket.API;
 
 namespace fr34kyn01535.Uconomy
 {
+    [Serializable]
     public class UconomyConfiguration : IRocketPluginConfiguration
     {
         public string DatabaseAddress;
@@ -18,6 +21,13 @@ namespace fr34kyn01535.Uconomy
         {
             InitialBalance = 30;
             MoneyName = "Credits";
+
+            DatabaseAddress = "localhost";
+            DatabaseUsername = "root";
+            DatabasePassword = "";
+            DatabaseName = "unturned";
+            DatabaseTableName = "Unturned";
+            DatabasePort = 3306;
         }
     }
 }
