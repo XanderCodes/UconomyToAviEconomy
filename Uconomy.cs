@@ -14,13 +14,6 @@ namespace fr34kyn01535.Uconomy
 
         protected override void Load()
         {
-            Configuration.Instance.DatabaseAddress = "localhost";
-            Configuration.Instance.DatabaseUsername = "unturned";
-            Configuration.Instance.DatabasePassword = "password";
-            Configuration.Instance.DatabaseName = "unturned";
-            Configuration.Instance.DatabaseTableName = "uconomy";
-            Configuration.Instance.DatabasePort = 3306;
-
             Instance = this;
             Database = new DatabaseManager();
         }
